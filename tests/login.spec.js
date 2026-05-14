@@ -1,27 +1,26 @@
-const {test, expect} = require("@playwright/test");
+const { test, expect } = require("@playwright/test");
+const { LoginPage} = require("../pages/LoginPage");
 
-test ("successfully login", async ({page}) => {
-
-    await page.goto('https://www.saucedemo.com');
-    await page.locator('#user-name').fill('standard_user');
-    await page.locator('#password').fill('secret_sauce');
-    await page.locator('#login-button').click();
+test ('successful login', async ({page}) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.login('standard_user', 'secret_sauce');
     await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
 
+})
+
+test ('invalid login show error', async ({page}) =>{
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.login('wrong_user', 'wrong_password');
+    await expect(loginPage.errorMessage).toBeVisible();
 
 })
 
-test ("invalid login show error", async ({page}) => {
-    await page.goto("https://www.saucedemo.com");
-    await page.locator('#user-name').fill('wrong_user');
-    await page.locator('#password').fill('wrong_password');
-    await page.locator('#login-button').click();
-    await expect(page.locator('[data-test="error"]')).toBeVisible();
-})
+test ('empty fields show wrror', async ({page}) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.login('', '');
+    await expect(loginPage.errorMessage).toBeVisible();
 
-
-test ("empty fields show error", async({page}) => {
-    await page.goto("https://www.saucedemo.com");
-    await page.locator('#login-button').click();
-    await expect(page.locator('[data-test="error"]')).toBeVisible()
 })
