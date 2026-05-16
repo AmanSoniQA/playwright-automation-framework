@@ -11,6 +11,15 @@ test.beforeEach(async ({page}) => {
     await loginPage.login('standard_user', 'secret_sauce');
 })
 
+test.afterEach(async ({page}, testInfo) => {
+    if (testInfo.status !== 'passed') {
+        await page.screenshot({
+            path: 'screenshots/${testInfo.title}.png'
+        })
+
+    }
+})
+
 test ('add item to cart', async ({page}) => {
    
     await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
