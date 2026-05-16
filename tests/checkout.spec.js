@@ -3,14 +3,25 @@ const { LoginPage } = require('../pages/LoginPage');
 const { CartPage } = require('../pages/CartPage');
 const { CheckoutPage } = require('../pages/CheckoutPage');
 
-test ('complete checkout flow', async({page}) => {
+let checkoutPage;
+let cartPage;
 
+test.beforeEach(async ({page}) => {
     const loginPage = new LoginPage(page);
-    const cartPage = new CartPage(page);
-    const checkoutPage = new CheckoutPage(page);
-
+    cartPage = new CartPage(page);
+    checkoutPage = new CheckoutPage(page);
     await loginPage.goto();
     await loginPage.login('standard_user', 'secret_sauce');
+
+})
+
+
+
+test ('complete checkout flow', async({page}) => {
+
+   
+
+    
     await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
     await page.locator('.shopping_cart_link').click();
     await cartPage.clickCheckout();

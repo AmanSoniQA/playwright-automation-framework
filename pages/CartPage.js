@@ -4,7 +4,7 @@ class CartPage {
         this.cartIcon = page.locator('.shopping_cart_link');
         this.checkoutButton = page.locator('[data-test="checkout"]');
         this.removeButton = page.locator('[data-test="remove-sauce-labs-backpack"]');
-        this.cartItem = page.locator('.cart-item');
+        this.cartItem = page.locator('.cart_item');
     }
 
     async goto () {
