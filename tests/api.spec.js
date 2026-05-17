@@ -44,4 +44,24 @@ test.describe('User API', () => {
         expect(Array.isArray(body)).toBeTruthy();
         expect(body.length).toBe(10);
     });
+
+    test('POST user data is valid', async({request}) => {
+        const newPost = {
+            title: 'Aman Test Post',
+            body: 'Testing API Automation',
+            userId: '1'
+        };
+        const response = await request.post(`${BASE_URL}/posts`, {
+            data: newPost
+        });
+        const body = await response.json();
+
+        expect(response.status()).toBe(201);
+
+        expect(body.title).toBe(newPost.title);
+        expect(body.body).toBe(newPost.body);
+        expect(body.userId).toBe(newPost.userId);
+
+        expect(body.id).toBeTruthy();
+    })
 })
