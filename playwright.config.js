@@ -1,5 +1,7 @@
 const { defineConfig, devices } = require('@playwright/test');
-
+  require('dotenv').config({
+    path:`.env.${process.env.ENV || 'production'}`
+  })
 module.exports = defineConfig({
   testDir: './tests',
   fullyParallel: true,

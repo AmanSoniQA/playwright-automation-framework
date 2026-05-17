@@ -1,11 +1,11 @@
 const users = {
     standard : {
-        username: 'standard_user',
-        password: 'secret_sauce'
+        username: process.env.USERNAME,
+        password: process.env.PASSWORD
     },
     locked: {
         username: 'locked_out_user',
-        password: 'secret_sauce'
+        password: process.env.PASSWORD
     },
     invalid: {
         username: 'wrong_user',
